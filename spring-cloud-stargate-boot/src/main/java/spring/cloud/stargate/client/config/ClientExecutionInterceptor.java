@@ -1,4 +1,4 @@
-package spring.cloud.stargate.client;
+package spring.cloud.stargate.client.config;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;

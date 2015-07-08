@@ -13,7 +13,6 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
-import spring.cloud.stargate.client.ClientExecutionInterceptor;
 import spring.cloud.stargate.client.StargateClientBean;
 import spring.cloud.stargate.client.annotation.GateClient;
 

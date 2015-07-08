@@ -5,7 +5,7 @@ import spring.cloud.stargate.client.annotation.*;
 /**
  * @author chanwook
  */
-@GateClient("product")
+@GateClient("productClient")
 public interface ProductClient {
 
     @GET(path = "/products/{}", consumes = MediaType.APP_JSON)
