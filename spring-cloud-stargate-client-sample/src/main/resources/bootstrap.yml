@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: stargate
+  cloud:
+    config:
+      env: local
+      label: master # optional
+      server:
+        git:
+          uri: https://github.com/chanwookpark/config-repo

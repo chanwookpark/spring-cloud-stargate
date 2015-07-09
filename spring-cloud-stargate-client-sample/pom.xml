@@ -4,38 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-cloud-stargate</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>spring-cloud-stargate-boot</module>
-        <module>spring-cloud-stargate-client-sample</module>
-    </modules>
-
     <parent>
+        <artifactId>spring-cloud-stargate</artifactId>
         <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-build</artifactId>
         <version>1.0.2.RELEASE</version>
-        <relativePath/>
     </parent>
 
-    <properties>
-        <spring-cloud.version>1.0.2.RELEASE</spring-cloud.version>
-    </properties>
+    <artifactId>spring-cloud-stargate-client-sample</artifactId>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-commons-parent</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-config</artifactId>
-                <version>${spring-cloud.version}</version>
+                <artifactId>spring-cloud-starter-parent</artifactId>
+                <version>1.0.2.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -43,6 +25,19 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stargate-boot</artifactId>
+            <version>1.0.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -53,11 +48,8 @@
     <build>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

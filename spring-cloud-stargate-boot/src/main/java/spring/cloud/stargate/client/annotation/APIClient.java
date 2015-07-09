@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Target(value = {ElementType.TYPE})
 @Retention(value = RetentionPolicy.RUNTIME)
 @Documented
-public @interface GateClient {
+public @interface APIClient {
 
     String value() default "";
 }

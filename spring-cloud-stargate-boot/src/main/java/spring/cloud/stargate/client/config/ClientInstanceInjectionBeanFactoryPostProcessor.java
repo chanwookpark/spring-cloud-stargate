@@ -13,8 +13,8 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
-import spring.cloud.stargate.client.StargateClientBean;
-import spring.cloud.stargate.client.annotation.GateClient;
+import spring.cloud.stargate.client.annotation.APIClient;
+import spring.cloud.stargate.client.metadata.APIMetadataResolver;
 
 import java.util.Set;
 
@@ -26,6 +26,8 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
     private final Logger logger = LoggerFactory.getLogger(ClientInstanceInjectionBeanFactoryPostProcessor.class);
 
     private String basePackage;
+
+    private APIMetadataResolver metadataResolver;
 
     public ClientInstanceInjectionBeanFactoryPostProcessor() {
     }
@@ -46,7 +48,7 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
                         return beanDefinition.getMetadata().isIndependent();
                     }
                 };
-        scanner.addIncludeFilter(new AnnotationTypeFilter(GateClient.class, true, true));
+        scanner.addIncludeFilter(new AnnotationTypeFilter(APIClient.class, true, true));
 
         final Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents(basePackage);
         for (BeanDefinition definition : candidateComponents) {
@@ -57,12 +59,15 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
                 // create proxy instance
                 ProxyFactory proxy = new ProxyFactory();
                 proxy.setInterfaces(clientClass);
-                proxy.setTarget(new StargateClientBean());
+                proxy.setTarget(new APIClientBean());
                 proxy.addAdvice(new ClientExecutionInterceptor());
 
                 // resolve bean name
-                final GateClient clientAnnotation = clientClass.getAnnotation(GateClient.class);
+                final APIClient clientAnnotation = clientClass.getAnnotation(APIClient.class);
                 String beanName = StringUtils.hasText(clientAnnotation.value()) ? clientAnnotation.value() : beanClassName;
+
+                //TODO refactoring..
+                createMetadata(beanName);
 
                 beanFactory.registerSingleton(beanName, proxy.getProxy());
 
@@ -76,12 +81,16 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
         }
     }
 
+    private void createMetadata(String apiKey) {
+        metadataResolver.getApiHost(apiKey);
+    }
+
     public void setBasePackage(String basePackage) {
         this.basePackage = basePackage;
     }
 
-    public String getBasePackage() {
-        return basePackage;
+    public void setMetadataResolver(APIMetadataResolver metadataResolver) {
+        this.metadataResolver = metadataResolver;
     }
 
     @Override
