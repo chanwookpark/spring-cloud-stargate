@@ -30,7 +30,7 @@ public class InitConfigTest {
     @Test
     public void injection() throws Exception {
         assertThat(client, notNullValue());
-//        assertThat(applicationContext.getBean("productClient"), notNullValue());
+        assertThat(applicationContext.getBean("product"), notNullValue());
     }
 
     @Test
