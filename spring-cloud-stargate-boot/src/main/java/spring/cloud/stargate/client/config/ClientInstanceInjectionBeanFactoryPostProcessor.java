@@ -56,18 +56,18 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
                 final String beanClassName = definition.getBeanClassName();
                 final Class<?> clientClass = ClassUtils.forName(beanClassName, /* use default classLoader*/ null);
 
-                // create proxy instance
-                ProxyFactory proxy = new ProxyFactory();
-                proxy.setInterfaces(clientClass);
-                proxy.setTarget(new APIClientBean());
-                proxy.addAdvice(new ClientExecutionInterceptor());
-
                 // resolve bean name
                 final APIClient clientAnnotation = clientClass.getAnnotation(APIClient.class);
                 String beanName = StringUtils.hasText(clientAnnotation.value()) ? clientAnnotation.value() : beanClassName;
 
                 //TODO refactoring..
-                createMetadata(beanName);
+                final ApiMetadataMap metadata = metadataResolver.createMetadata(clientAnnotation.value());
+
+                // create proxy instance
+                ProxyFactory proxy = new ProxyFactory();
+                proxy.setInterfaces(clientClass);
+                proxy.setTarget(new ApiClientBean(metadata));
+                proxy.addAdvice(new ClientExecutionInterceptor());
 
                 beanFactory.registerSingleton(beanName, proxy.getProxy());
 
@@ -79,10 +79,6 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
                 throw new RuntimeException(e);
             }
         }
-    }
-
-    private void createMetadata(String apiKey) {
-        metadataResolver.getApiHost(apiKey);
     }
 
     public void setBasePackage(String basePackage) {

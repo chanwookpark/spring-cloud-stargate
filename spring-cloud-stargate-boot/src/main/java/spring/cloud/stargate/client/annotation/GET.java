@@ -1,7 +1,5 @@
 package spring.cloud.stargate.client.annotation;
 
-import spring.cloud.stargate.client.MediaType;
-
 import java.lang.annotation.*;
 
 /**
@@ -9,10 +7,11 @@ import java.lang.annotation.*;
  */
 @Target(value = {ElementType.METHOD})
 @Retention(value = RetentionPolicy.RUNTIME)
+@Inherited
 @Documented
 public @interface GET {
 
     String path();
 
-    MediaType consumes();
+    String consumes();
 }

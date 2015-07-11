@@ -1,8 +1,10 @@
 package spring.cloud.stargate.client.metadata;
 
+import spring.cloud.stargate.client.config.ApiMetadataMap;
+
 /**
  * @author chanwook
  */
 public interface APIMetadataResolver {
-    String getApiHost(String key);
+    ApiMetadataMap createMetadata(String key);
 }
