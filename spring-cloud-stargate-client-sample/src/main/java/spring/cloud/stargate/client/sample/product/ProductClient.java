@@ -1,6 +1,5 @@
 package spring.cloud.stargate.client.sample.product;
 
-import org.springframework.http.MediaType;
 import spring.cloud.stargate.client.annotation.*;
 
 /**
@@ -9,9 +8,9 @@ import spring.cloud.stargate.client.annotation.*;
 @APIClient("product")
 public interface ProductClient {
 
-    @GET(path = "/products/{}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GET(path = "/products/{}", consumes = "application/json")
     Product getOne(@Path String id);
 
-    @POST(path = "/products/{}", produces = MediaType.APPLICATION_XML_VALUE)
-    String create(@Path String id, @Body Product product);
+    @POST(path = "/products/{productId}", produces = "application/xml")
+    String create(@Body Product product, @Path("productId") String id);
 }
