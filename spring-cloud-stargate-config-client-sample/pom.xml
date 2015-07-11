@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>spring-cloud-stargate</artifactId>
+        <artifactId>spring-cloud-stargate-parent</artifactId>
         <groupId>org.springframework.cloud</groupId>
-        <version>1.0.2.RELEASE</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>spring-cloud-stargate-client-sample</artifactId>

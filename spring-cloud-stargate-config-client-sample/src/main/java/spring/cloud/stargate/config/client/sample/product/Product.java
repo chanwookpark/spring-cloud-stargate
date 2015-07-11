@@ -1,4 +1,4 @@
-package spring.cloud.stargate.client.sample.product;
+package spring.cloud.stargate.config.client.sample.product;
 
 /**
  * @author chanwook

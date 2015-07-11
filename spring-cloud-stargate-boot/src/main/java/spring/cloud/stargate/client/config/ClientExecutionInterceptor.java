@@ -32,7 +32,7 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
             String url = createUri(api, method);
             HttpEntity requestEntity = createRequestEntity(method);
             Class<?> responseType = reflective.getMethod().getReturnType();
-            Map<String, Object> paramMap = createParamemter(reflective);
+            Map<String, Object> paramMap = createParameter(reflective);
 
             final ResponseEntity<?> responseEntity = restTemplate.exchange(url, method.getType(), requestEntity, responseType, paramMap);
             return responseEntity.getBody();
@@ -53,14 +53,13 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
         return headers;
     }
 
-    private Map<String, Object> createParamemter(ReflectiveMethodInvocation reflective) {
+    private Map<String, Object> createParameter(ReflectiveMethodInvocation reflective) {
         Map<String, Object> paramMap = new HashMap<>();
-//        final TypeVariable<Method>[] typeParameters = reflective.getMethod().getTypeParameters();
-        final Parameter[] parameters = reflective.getMethod().getParameters();
-        final Object[] arguments = reflective.getArguments();
+        Parameter[] parameters = reflective.getMethod().getParameters();
+        Object[] arguments = reflective.getArguments();
         for (int index = 0; index < arguments.length; index++) {
-            final String name = parameters[index].getName();
-            final Object value = arguments[index];
+            String name = parameters[index].getName();
+            Object value = arguments[index];
             paramMap.put(name, value);
         }
         return paramMap;

@@ -1,4 +1,4 @@
-package spring.cloud.stargate.client.sample;
+package spring.cloud.stargate.config.client.sample;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +7,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import spring.cloud.stargate.client.sample.product.Product;
-import spring.cloud.stargate.client.sample.product.ProductClient;
+import spring.cloud.stargate.config.client.sample.product.Product;
+import spring.cloud.stargate.config.client.sample.product.ProductClient;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
  * @author chanwook
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ClientSampleApp.class)
+@SpringApplicationConfiguration(classes = ConfigClientApp.class)
 @WebIntegrationTest
 public class InitConfigTest {
 

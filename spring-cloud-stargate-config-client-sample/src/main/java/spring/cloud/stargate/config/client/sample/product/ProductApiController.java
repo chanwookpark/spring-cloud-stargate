@@ -1,4 +1,4 @@
-package spring.cloud.stargate.client.sample.product;
+package spring.cloud.stargate.config.client.sample.product;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

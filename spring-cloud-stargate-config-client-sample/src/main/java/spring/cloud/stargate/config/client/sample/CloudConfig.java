@@ -1,4 +1,4 @@
-package spring.cloud.stargate.client.sample;
+package spring.cloud.stargate.config.client.sample;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

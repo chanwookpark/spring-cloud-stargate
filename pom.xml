@@ -4,19 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-cloud-stargate</artifactId>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-stargate-parent</artifactId>
     <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
 
     <modules>
         <module>spring-cloud-stargate-boot</module>
-        <module>spring-cloud-stargate-client-sample</module>
+        <module>spring-cloud-stargate-config-client-sample</module>
+        <module>spring-cloud-stargate-config-server-sample</module>
     </modules>
 
     <parent>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-build</artifactId>
-        <version>1.0.2.RELEASE</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.4.RELEASE</version>
         <relativePath/>
+        <!-- lookup parent from repository -->
     </parent>
 
     <properties>
@@ -49,17 +53,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
