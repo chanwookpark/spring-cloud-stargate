@@ -10,10 +10,15 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>spring-cloud-stargate-boot</module>
+        <module>spring-cloud-stargate-core</module>
         <module>spring-cloud-stargate-config-client-sample</module>
         <module>spring-cloud-stargate-config-server-sample</module>
     </modules>
+
+    <properties>
+        <version.stargate>1.0.0-SNAPSHOT</version.stargate>
+        <version.spring-cloud>1.0.2.RELEASE</version.spring-cloud>
+    </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -23,23 +28,19 @@
         <!-- lookup parent from repository -->
     </parent>
 
-    <properties>
-        <spring-cloud.version>1.0.2.RELEASE</spring-cloud.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-commons-parent</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>${version.spring-cloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-config</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>${version.spring-cloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -54,4 +55,15 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -1,4 +1,4 @@
-package spring.cloud.stargate.client.config;
+package spring.cloud.stargate.client.runtime;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -7,10 +7,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import spring.cloud.stargate.client.annotation.GET;
+import spring.cloud.stargate.client.annotation.Path;
+import spring.cloud.stargate.client.config.ApiClientBean;
+import spring.cloud.stargate.client.config.ApiMetadataMap;
+import spring.cloud.stargate.client.config.HttpRequest;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Parameter;
 import java.util.HashMap;
@@ -29,12 +35,11 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
         if (reflective.getThis() instanceof ApiClientBean) {
             ApiClientBean api = (ApiClientBean) reflective.getThis();
             HttpRequest method = createMethod(reflective);
-            String url = createUri(api, method);
+            String url = createUri(api, method, createParameter(reflective));
             HttpEntity requestEntity = createRequestEntity(method);
             Class<?> responseType = reflective.getMethod().getReturnType();
-            Map<String, Object> paramMap = createParameter(reflective);
 
-            final ResponseEntity<?> responseEntity = restTemplate.exchange(url, method.getType(), requestEntity, responseType, paramMap);
+            final ResponseEntity<?> responseEntity = restTemplate.exchange(url, method.getType(), requestEntity, responseType);
             return responseEntity.getBody();
         }
         return invocation.proceed();
@@ -58,7 +63,11 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
         Parameter[] parameters = reflective.getMethod().getParameters();
         Object[] arguments = reflective.getArguments();
         for (int index = 0; index < arguments.length; index++) {
+            final Path path = parameters[index].getAnnotation(Path.class);
             String name = parameters[index].getName();
+            if (StringUtils.hasText(path.value())) {
+                name = path.value();
+            }
             Object value = arguments[index];
             paramMap.put(name, value);
         }
@@ -78,7 +87,7 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
         return method;
     }
 
-    private String createUri(ApiClientBean api, HttpRequest method) {
+    private String createUri(ApiClientBean api, HttpRequest method, Map<String, Object> parameter) throws UnsupportedEncodingException {
         final ApiMetadataMap metadata = api.getMetadata();
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance();
 
@@ -87,6 +96,8 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
         uriBuilder.port(metadata.get("port"));
         uriBuilder.path(method.getPath());
 
-        return uriBuilder.toUriString();
+        final String uri = uriBuilder.buildAndExpand(parameter).encode().toUriString();
+
+        return uri;
     }
 }

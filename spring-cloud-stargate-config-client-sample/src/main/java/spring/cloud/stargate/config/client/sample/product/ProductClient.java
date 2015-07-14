@@ -8,8 +8,9 @@ import spring.cloud.stargate.client.annotation.*;
 @APIClient("product")
 public interface ProductClient {
 
-    @GET(path = "/products/{}", consumes = "application/json")
-    Product getOne(@Path String id);
+    //TODO {}에 id 적지 않아도 되도록 수정
+    @GET(path = "/products/{productId}", consumes = "application/json")
+    Product getOne(@Path("productId") String id);
 
     @POST(path = "/products/{productId}", produces = "application/xml")
     String create(@Body Product product, @Path("productId") String id);

@@ -15,6 +15,7 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 import spring.cloud.stargate.client.annotation.APIClient;
 import spring.cloud.stargate.client.metadata.APIMetadataResolver;
+import spring.cloud.stargate.client.runtime.ClientExecutionInterceptor;
 
 import java.util.Set;
 
