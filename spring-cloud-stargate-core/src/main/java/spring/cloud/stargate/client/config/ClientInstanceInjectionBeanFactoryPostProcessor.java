@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
@@ -29,6 +30,8 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
     private String basePackage;
 
     private APIMetadataResolver metadataResolver;
+
+    private LoadBalancerClient loadBalancer;
 
     public ClientInstanceInjectionBeanFactoryPostProcessor() {
     }
@@ -68,7 +71,7 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
                 ProxyFactory proxy = new ProxyFactory();
                 proxy.setInterfaces(clientClass);
                 proxy.setTarget(new ApiClientBean(metadata));
-                proxy.addAdvice(new ClientExecutionInterceptor());
+                proxy.addAdvice(new ClientExecutionInterceptor(loadBalancer));
 
                 beanFactory.registerSingleton(beanName, proxy.getProxy());
 
@@ -95,5 +98,9 @@ public class ClientInstanceInjectionBeanFactoryPostProcessor implements BeanFact
         if (!StringUtils.hasText(basePackage)) {
             throw new RuntimeException("Needs scanning package(basePackage property)!");
         }
+    }
+
+    public void setLoadBalancer(LoadBalancerClient loadBalancer) {
+        this.loadBalancer = loadBalancer;
     }
 }

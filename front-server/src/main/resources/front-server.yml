@@ -1,0 +1,27 @@
+#logging
+logging:
+  level:
+    org.springframework: INFO
+    r2: DEBUG
+
+# Spring Properties
+spring:
+  application:
+     name: front-server
+#  cloud:
+#    config:
+#      env: local
+#      label: master # optional
+#      server:
+#        git:
+#          uri: https://github.com/chanwookpark/config-repo
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+
+# HTTP Server
+server:
+  port: 3333   # HTTP (Tomcat) port

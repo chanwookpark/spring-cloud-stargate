@@ -3,6 +3,8 @@ package spring.cloud.stargate.client.runtime;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.ReflectiveMethodInvocation;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -28,6 +30,15 @@ import java.util.Map;
 public class ClientExecutionInterceptor implements MethodInterceptor {
 
     final RestTemplate restTemplate = new RestTemplate();
+
+    private LoadBalancerClient loadBalancer;
+
+    public ClientExecutionInterceptor() {
+    }
+
+    public ClientExecutionInterceptor(LoadBalancerClient loadBalancer) {
+        this.loadBalancer = loadBalancer;
+    }
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -91,10 +102,17 @@ public class ClientExecutionInterceptor implements MethodInterceptor {
         final ApiMetadataMap metadata = api.getMetadata();
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance();
 
-        uriBuilder.scheme("http");
-        uriBuilder.host(metadata.get("host"));
-        uriBuilder.port(metadata.get("port"));
-        uriBuilder.path(method.getPath());
+        if (loadBalancer != null) {
+            //TODO 이름은 빼내기
+            ServiceInstance instance = loadBalancer.choose("products");
+            uriBuilder.host(instance.getHost());
+            uriBuilder.port(instance.getPort());
+        } else {
+            uriBuilder.scheme("http");
+            uriBuilder.host(metadata.get("host"));
+            uriBuilder.port(metadata.get("port"));
+            uriBuilder.path(method.getPath());
+        }
 
         final String uri = uriBuilder.buildAndExpand(parameter).encode().toUriString();
 
