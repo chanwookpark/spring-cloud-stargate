@@ -1,19 +1,18 @@
 package spring.cloud.stargate.service.account;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author chanwook
  */
-@EnableAutoConfiguration
+@SpringBootApplication
 @EnableDiscoveryClient
 public class AccountServiceServer {
 
     public static void main(String[] args) {
-        // Will configure using accounts-server.yml
-        System.setProperty("spring.config.name", "accounts-server");
+        System.setProperty("spring.config.name", "accounts-service");
 
         SpringApplication.run(AccountServiceServer.class, args);
     }

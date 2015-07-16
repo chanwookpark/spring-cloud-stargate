@@ -20,7 +20,7 @@ public class WebAccountsController {
     @RequestMapping("/accounts/{number}")
     public String findAccounts(@PathVariable String number, DustModel model) {
 
-        final Account account = service.getByNumber(number);
+        Account account = service.getByNumber(number);
         model.put("account", account);
 
         return "account";

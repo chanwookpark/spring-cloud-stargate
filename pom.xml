@@ -10,7 +10,6 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>spring-cloud-stargate-core</module>
         <module>config-server</module>
         <module>eureka-server</module>
         <module>account-server</module>
@@ -34,22 +33,8 @@
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-commons-parent</artifactId>
-                <version>${version.spring-cloud}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-config</artifactId>
-                <version>${version.spring-cloud}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
-                <version>1.0.2.RELEASE</version>
+                <version>${version.spring-cloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
