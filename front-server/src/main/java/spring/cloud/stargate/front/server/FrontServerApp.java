@@ -3,12 +3,9 @@ package spring.cloud.stargate.front.server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import spring.cloud.stargate.front.server.account.WebAccountService;
-import spring.cloud.stargate.front.server.account.WebAccountsController;
 
 /**
  * @author chanwook
@@ -30,15 +27,4 @@ public class FrontServerApp {
         return "OK!";
     }
 
-    @Bean
-    public WebAccountService accountsService() {
-        // 1. Value should not be hard-coded, just to keep things simple in this example.
-        // 2. Case insensitive: could also use: http://accounts-service
-        return new WebAccountService("http://ACCOUNTS-SERVICE");  // serviceUrl
-    }
-
-    @Bean
-    public WebAccountsController accountsController() {
-        return new WebAccountsController(accountsService());
-    }
 }

@@ -12,8 +12,6 @@
     <modules>
         <module>spring-cloud-stargate-core</module>
         <module>config-server</module>
-        <module>eureka-server</module>
-        <module>account-server</module>
         <module>front-server</module>
     </modules>
 
@@ -34,20 +32,6 @@
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-commons-parent</artifactId>
-                <version>${version.spring-cloud}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-config</artifactId>
-                <version>${version.spring-cloud}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-parent</artifactId>
                 <version>1.0.2.RELEASE</version>
                 <type>pom</type>
@@ -55,14 +39,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
