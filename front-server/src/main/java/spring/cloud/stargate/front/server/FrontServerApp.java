@@ -3,6 +3,7 @@ package spring.cloud.stargate.front.server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,9 @@ import spring.cloud.stargate.front.server.account.AccountServiceConfig;
  */
 @SpringBootApplication
 @ComponentScan(useDefaultFilters = false)
-@EnableDiscoveryClient
 @RestController
+@EnableDiscoveryClient
+@EnableFeignClients
 @Import({WebConfig.class, AccountServiceConfig.class})
 public class FrontServerApp {
 
